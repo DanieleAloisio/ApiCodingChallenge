@@ -10,7 +10,6 @@ namespace ApiCodingChallenge.Models
         [Required]
         public string Title { get; set; }
 
-        [Required]
         public string Text { get; set; }
 
         public Article(Guid id, string title, string text)

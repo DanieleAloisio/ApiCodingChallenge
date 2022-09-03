@@ -19,7 +19,7 @@ namespace ApiCodingChallenge.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Article))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Article))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ArticleDto> Save([FromBody] ArticleDto article)
@@ -33,11 +33,6 @@ namespace ApiCodingChallenge.Controllers
                 return StatusCode(400, new ErrMsg("Title is null.",
              this.HttpContext.Response.StatusCode));
             }
-            else if (String.IsNullOrEmpty(article.text))
-            {
-                return StatusCode(400, new ErrMsg("Text is null.",
-             this.HttpContext.Response.StatusCode));
-            }
 
             Article art = new Article(Guid.NewGuid(), article.title, article.text);
 
@@ -45,7 +40,7 @@ namespace ApiCodingChallenge.Controllers
 
             if (guid == Guid.Empty)
             {
-                return StatusCode(500, new ErrMsg($"Ci sono stati problemi nell'inserimento dell'Articolo {art.Id}.", 500));
+                return StatusCode(500, new ErrMsg($"There was a problem saving { art.Id}.", 500));
             }
 
             Response.Headers.Add("Location", $"/api/articles/{art.Id}");
@@ -54,19 +49,18 @@ namespace ApiCodingChallenge.Controllers
 
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Article))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Article))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ArticleDto> Edit(Guid id, [FromBody] ArticleDto article)
         {
-            if (String.IsNullOrEmpty(article.title))
+            if (article == null)
+            {
+                return BadRequest(new ErrMsg("empty item data", this.HttpContext.Response.StatusCode));
+            }
+            else if (String.IsNullOrEmpty(article.title))
             {
                 return StatusCode(400, new ErrMsg("Title is null.",
-             this.HttpContext.Response.StatusCode));
-            }
-           else if (String.IsNullOrEmpty(article.text))
-            {
-                return StatusCode(400, new ErrMsg("Text is null.",
              this.HttpContext.Response.StatusCode));
             }
 

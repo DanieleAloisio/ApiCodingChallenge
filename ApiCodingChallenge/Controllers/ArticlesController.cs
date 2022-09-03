@@ -29,6 +29,18 @@ namespace ApiCodingChallenge.Controllers
                 return BadRequest(new ErrMsg("empty item data", this.HttpContext.Response.StatusCode));
             }
 
+            if (String.IsNullOrEmpty(article.title))
+            {
+                return StatusCode(400, new ErrMsg("Title is null.",
+             this.HttpContext.Response.StatusCode));
+            }
+
+            if (String.IsNullOrEmpty(article.text))
+            {
+                return StatusCode(400, new ErrMsg("Text is null.",
+             this.HttpContext.Response.StatusCode));
+            }
+
             Article art = new Article(Guid.NewGuid(), article.title, article.text);
 
             var guid = _repository.Create(art);
@@ -52,6 +64,12 @@ namespace ApiCodingChallenge.Controllers
             if (String.IsNullOrEmpty(article.title))
             {
                 return StatusCode(400, new ErrMsg("Title is null.",
+             this.HttpContext.Response.StatusCode));
+            }
+
+            if (String.IsNullOrEmpty(article.text))
+            {
+                return StatusCode(400, new ErrMsg("Text is null.",
              this.HttpContext.Response.StatusCode));
             }
 

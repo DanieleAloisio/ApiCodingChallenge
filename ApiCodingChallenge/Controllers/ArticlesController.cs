@@ -28,14 +28,12 @@ namespace ApiCodingChallenge.Controllers
             {
                 return BadRequest(new ErrMsg("empty item data", this.HttpContext.Response.StatusCode));
             }
-
-            if (String.IsNullOrEmpty(article.title))
+            else if (String.IsNullOrEmpty(article.title))
             {
                 return StatusCode(400, new ErrMsg("Title is null.",
              this.HttpContext.Response.StatusCode));
             }
-
-            if (String.IsNullOrEmpty(article.text))
+            else if (String.IsNullOrEmpty(article.text))
             {
                 return StatusCode(400, new ErrMsg("Text is null.",
              this.HttpContext.Response.StatusCode));
@@ -66,8 +64,7 @@ namespace ApiCodingChallenge.Controllers
                 return StatusCode(400, new ErrMsg("Title is null.",
              this.HttpContext.Response.StatusCode));
             }
-
-            if (String.IsNullOrEmpty(article.text))
+           else if (String.IsNullOrEmpty(article.text))
             {
                 return StatusCode(400, new ErrMsg("Text is null.",
              this.HttpContext.Response.StatusCode));
